@@ -1,0 +1,1 @@
+0 14 * * 0 sh /week7/run_weekly.sh

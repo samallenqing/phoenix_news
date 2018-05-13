@@ -1,0 +1,9 @@
+.logoImage {
+    height: 100px;
+}
+
+nav ul a,
+.navbar-material .nav-wrapper .brand-logo {
+    height: 100px;
+    text-align: center;
+}
