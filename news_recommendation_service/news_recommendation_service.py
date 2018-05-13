@@ -3,6 +3,7 @@ import operator
 import os
 import sys
 
+from json import load
 from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'common'))
@@ -11,8 +12,12 @@ import mongodb_client
 
 PREFERENCE_MODEL_TABLE_NAME = 'user_preference_model'
 
-SERVER_HOST = 'localhost'
-SERVER_PORT = 5050
+with open('../config.json') as config_data:
+    cfg = load(config_data)
+
+SERVER_HOST = cfg['rpc_server']['recommendation_server']['host']
+SERVER_PORT = cfg['rpc_server']['recommendation_server']['port']
+
 
 
 def is_close(a, b, rel_tol=1e-09, abs_tol=0.0):

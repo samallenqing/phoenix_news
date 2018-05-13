@@ -1,11 +1,12 @@
 var jayson = require('jayson');
+var config = require('../../../config');
 
 var client = jayson.client.http({
-    port:4040,
-    hostname:'localhost'
+    hostname: config.rpc_client.web_server.hostname,
+    port: config.rpc_client.web_server.port
 });
 
-function add(a, b, callback){
+function add(a, b, callback) {
     client.request('add', [a, b], function (err, error, response) {
         if (err) throw err;
         console.log(response);
@@ -29,7 +30,7 @@ function logNewsClickForUser(user_id, news_id) {
     });
 }
 
-module.exports ={
+module.exports = {
     add: add,
     getNewsSummariesForUser: getNewsSummariesForUser,
     logNewsClickForUser: logNewsClickForUser

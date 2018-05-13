@@ -35,7 +35,7 @@ app.use('/news', authCheckMiddleWare);
 app.use('/news', news);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
     res.status(404);
 });
 

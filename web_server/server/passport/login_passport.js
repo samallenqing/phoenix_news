@@ -1,49 +1,53 @@
 const jwt = require('jsonwebtoken');
 const User = require('mongoose').model('User');
 const PassportLocalStrategy = require('passport-local').Strategy;
-const config = require('../config/config.json');
+const config = require('../../../config');
 
 module.exports = new PassportLocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password',
-  session: false,
-  passReqToCallback: true
+    usernameField: 'email',
+    passwordField: 'password',
+    session: false,
+    passReqToCallback: true
 }, (req, email, password, done) => {
-  const userData = {
-    email: email.trim(),
-    password: password
-  };
+    const userData = {
+        email: email.trim(),
+        password: password
+    };
 
-  return User.findOne({ email: userData.email }, (err, user) => {
-    if (err) { return done(err); }
+    return User.findOne({email: userData.email}, (err, user) => {
+        if (err) {
+            return done(err);
+        }
 
-    if (!user) {
-      const error = new Error('Incorrect email or password');
-      error.name = 'IncorrectCredentialsError';
+        if (!user) {
+            const error = new Error('Incorrect email or password');
+            error.name = 'IncorrectCredentialsError';
 
-      return done(error);
-    }
+            return done(error);
+        }
 
-    return user.comparePassword(userData.password, (passwordErr, isMatch) => {
-      if (err) { return done(err); }
+        return user.comparePassword(userData.password, (passwordErr, isMatch) => {
+            if (err) {
+                return done(err);
+            }
 
-      if (!isMatch) {
-        const error = new Error('Incorrect email or password');
-        error.name = 'IncorrectCredentialsError';
+            if (!isMatch) {
+                const error = new Error('Incorrect email or password');
+                error.name = 'IncorrectCredentialsError';
 
-        return done(error);
-      }
+                return done(error);
+            }
 
-      const payload = {
-        sub: user._id
-      };
+            const payload = {
+                sub: user._id
+            };
 
-      const token = jwt.sign(payload, config.jwtSecret);
-      const data = {
-        name: user.email
-      };
+            const token = jwt.sign(payload, config.jwtSecret);
+            const data = {
+                name: user.email
+            };
 
-      return done(null, token, data);
+            return done(null, token, data);
+        });
     });
-  });
 });

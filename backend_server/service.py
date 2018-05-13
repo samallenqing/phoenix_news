@@ -1,8 +1,11 @@
 """This is the backend server"""
 import operations
 
+from json import load
 from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
 
+with open('../config.json') as config_data:
+    cfg = load(config_data)
 
 def get_one_news():
     """Get One News From Server"""
@@ -26,8 +29,8 @@ def log_news_click_for_user(user_id, news_id):
     operations.log_news_click_for_user(user_id, news_id)
 
 
-SERVER_HOST = 'localhost'
-SERVER_PORT = 4040
+SERVER_HOST = cfg['rpc_server']['backend_server']['host']
+SERVER_PORT = cfg['rpc_server']['backend_server']['port']
 
 RPC_SERVER = SimpleJSONRPCServer((SERVER_HOST, SERVER_PORT))
 

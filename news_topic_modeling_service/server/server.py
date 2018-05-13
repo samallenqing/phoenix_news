@@ -22,10 +22,8 @@ with open('../../config.json') as configure_data:
 
 learn = tf.contrib.learn
 
-SERVER_HOST = cfg['jsonrpc']['news_topic_modeling_service']['host']
-SERVER_PORT = cfg['jsonrpc']['news_topic_modeling_service']['port']
-# SERVER_HOST = 'localhost'
-# SERVER_PORT = 6060
+SERVER_HOST = cfg['rpc_server']['news_modeling_server']['host']
+SERVER_PORT = cfg['rpc_server']['news_modeling_server']['port']
 
 MODEL_DIR = '../model'
 MODEL_UPDATE_LAG_IN_SECONDS = 10
