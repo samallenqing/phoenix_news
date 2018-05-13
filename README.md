@@ -1,2 +1,2 @@
 # phoenix_news
-User CNN to recommend user prefer news
+Use CNN to recommend user prefer news
